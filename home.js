@@ -15,6 +15,10 @@ const headerContainer = document.getElementById("header-container")
 
 const loadingSpinner = document.getElementById("loading-spinner")
 
+const modalContainer = document.getElementById("modal-container")
+
+
+
 function switchTab(tab) {
     let filteredData = [];
     // console.log(tab);
@@ -58,11 +62,12 @@ async function loadCard () {
     // loadingSpinner.classList.remove("hidden")
     // loadingSpinner.classList.add("flex")
 try {
-    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues`)
 const data = await res.json();
 allData = data.data;
 hideLoading();
 switchTab("all")
+openModal(data.data)
 // loadingSpinner.classList.add("hidden");
 // loadingSpinner.classList.remove("flex");
 // // console.log(data);
@@ -142,7 +147,7 @@ cards.forEach(card => {
     console.log(card);
     const newBtn = document.createElement("div")
     newBtn.innerHTML = `
-    <div class="p-4 space-y-3 shadow-lg h-full">
+    <div onclick="openModal(${card.id})" class="p-4 space-y-3 shadow-lg h-full">
             <div class="flex justify-between ">
                 <img src="./assets/Open-Status.png" alt="">
                 <h2 class="bg-[#FEECEC] text-[#EF4444] w-20 rounded-xl flex justify-center items-center  text-[12px] font-medium">${card.priority}</h2>
@@ -166,6 +171,62 @@ cards.forEach(card => {
     
     allCardContainer.appendChild(newBtn);
 });
+
+}
+
+function openModal(post) {
+
+
+    modalContainer.showModal();
+    modalContainer.innerHTML = "";
+
+    const modalBtn = document.createElement("div");
+    modalBtn.innerHTML = `
+    <div class="modal-box space-y-4">
+
+                <div class="" >
+                    <h2 class="text-[#1F2937] text-[24px] font-bold">${post.title}</h2>
+                    <div class="flex items-center space-x-3">
+                        <button class="bg-[#00A96E] px-3 py-2 rounded-full">Opened</button>
+                        <p class="text-[#64748B] text-[12px] ">Opened by Fahim Ahmed</p>
+                        <p class="text-[#64748B] text-[12px] ">22/02/2026</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button class="bg-[#FEECEC] text-[#EF4444]  py-2 px-3 rounded-full flex justify-center items-center  text-[12px] font-medium">Bug</button>
+                    <button class="bg-[#FFF8D6] text-[#D97706] px-2 rounded-full flex justify-center items-center text-[12px] font-medium">help wanted</button>
+                </div>
+                
+                <div> 
+                    <p class="text-[#64748B] text-[16px] ">The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.</p>
+                </div>
+
+                <div class="grid grid-cols-2 bg-slate-100 p-4">
+                    <div>
+                        <h3 class="text-[#64748B] text-[16px] ">Assignee:</h3>
+                        <h3 class="text-[#1F2937] text-[16px] font-semibold">Fahim Ahmed</h3>
+                    </div>
+
+                    <div class="">
+                        <h3 class="text-[#64748B] text-[16px]  rounded-full  font-medium ">Priority:</h3>
+                        <button class="btn bg-[#EF4444] rounded-full py-2 px-4 text-white">High</button>
+                    </div>
+                </div>
+
+
+                
+
+            <div class="modal-action">
+                <form method="dialog">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn btn-primary">Close</button>
+                </form>
+            </div>
+            </div>
+    `;
+
+    modalContainer.appendChild(modalBtn);
 
 }
 
