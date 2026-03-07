@@ -44,41 +44,25 @@
 
     <section class="w-9/12 mx-auto mt-15 bg-white shadow-md p-6 ">
         <div class="space-x-3"> 
-            <button class="btn btn-primary">All</button>
-            <button class="btn btn-primary">Open</button>
-            <button class="btn btn-primary">Closed</button>
+            <button id="btn-all" onclick="switchTab('all')" class="btn">All</button>
+            <button id="btn-open" onclick="switchTab('open')" class="btn">Open</button>
+            <button id="btn-close" onclick="switchTab('close')" class="btn">Closed</button>
         </div>
     </section>
 
     <main class=" w-9/12 mx-auto">
 
-        <div class=" mt-5 bg-white shadow-md px-3 flex justify-between">
-                <div class="flex gap-3">
-                    <img class="bg-[#ECE4FF] p-1 rounded-full w-10 h-10" src="./assets/Aperture.png" alt="">
-                <div>
-                    <h2 class="font-semibold text-xl">50 Issues</h2>
-                    <p class="text-[#64748B] text-sm ">Track and manage your project issues</p>
-                </div>
-                </div>
-            <div class="md:flex gap-3">
-                <div class="flex items-center gap-1">
-                        <img class="w-3 h-3 " src="./assets/Ellipse 2 (1).png" alt="">
-                        <p class="font-medium text-[16px] tet-[#1F2937]"> Open</p>
-                </div>
-                <div class="flex items-center gap-1">
-                    <img class="w-3 h-3 " src="./assets/Ellipse 2.png" alt="">
-                    <p class="font-medium text-[16px] tet-[#1F2937]">Closed</p>
-                </div>
-            </div>
+        <div id="header-container" class=" bg-white shadow-md px-3 mt-4 flex">
+            
         </div>
         
-    <section id="all-card-container" class="p-8 grid md:grid-cols-4 shadow-lg gap-4">
-
-        
-        
-        
-
+    <section id="all-card-container" class="all-container p-8 grid md:grid-cols-4 shadow-lg gap-4">
     </section>
+
+
+    <section id="open-container" class="">open</section>
+    <section id="closed-container" class="closed">open</section>
+
     </main>
 
     <script src="./home.js"></script>

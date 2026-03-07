@@ -12,7 +12,7 @@ const loginBtn = document.getElementById('login-btn').addEventListener("click", 
         alert("login successfully")
         console.log("succes");
         
-        window.location.assign("/home.html");
+        window.location.assign("home.html");
         // window.location.assign("home.html");
     }else{
         alert("login failed")
