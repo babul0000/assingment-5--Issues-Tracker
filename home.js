@@ -6,10 +6,13 @@ const currentTab = "all";
 
 const active = ["btn", "btn-primary"];
 const inactive = ["btn", "bg-slate-100", "text-black", "px-2.5", "py-2", "shadow-md"];
+const allCard = document.getElementById("all-card-container")
 
 const allContainer = document.getElementsByClassName("all-container")
-const openContainer = document.getElementById("open-container")
-const closedContainer = document.getElementById("closed-container")
+// const openContainer = document.getElementById("open-container")
+// const closedContainer = document.getElementById("closed-container")
+
+const loadingSpinner = document.getElementById("loading-spinner")
 
 function switchTab(tab) {
     console.log(tab);
@@ -46,11 +49,31 @@ switchTab(currentTab);
 
 
 
+
+function showLoading() {
+loadingSpinner.classList.remove("hidden")
+loadingSpinner.classList.add("flex");
+if (allContainer) {
+        allContainer.innerHTML = ""; 
+    }
+}
+
+function hideLoading() {
+loadingSpinner.classList.add("hidden");
+loadingSpinner.classList.remove("flex");
+}
+
 // api theke data niye ase display te dekhano 
 async function loadCard () {
+    showLoading();
+    // loadingSpinner.classList.remove("hidden")
+    // loadingSpinner.classList.add("flex")
 const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
 const data = await res.json();
-// console.log(data);
+hideLoading();
+// loadingSpinner.classList.add("hidden");
+// loadingSpinner.classList.remove("flex");
+// // console.log(data);
 display(data.data)
 // WebGL2RenderingContext("all")
 
@@ -60,7 +83,7 @@ display(data.data)
 
 const display = (cards) => {
 // console.log(cards);
-const allCard = document.getElementById("all-card-container")
+// const allCard = document.getElementById("all-card-container")
 allCard.innerHTML = "";
 
 // const openCount = cards.filter(card => card.status === "open")
