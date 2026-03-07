@@ -1,51 +1,81 @@
 
-// let alldata = [];
+let allData = [];
 
 
 const currentTab = "all";
 
 const active = ["btn", "btn-primary"];
 const inactive = ["btn", "bg-slate-100", "text-black", "px-2.5", "py-2", "shadow-md"];
-const allCard = document.getElementById("all-card-container")
+const allCardContainer = document.getElementById("all-card-container")
 
 const allContainer = document.getElementsByClassName("all-container")
+const headerContainer = document.getElementById("header-container")
 // const openContainer = document.getElementById("open-container")
 // const closedContainer = document.getElementById("closed-container")
 
 const loadingSpinner = document.getElementById("loading-spinner")
 
 function switchTab(tab) {
-    console.log(tab);
+    let filteredData = [];
+    // console.log(tab);
     const tabs = ["all", "open", "close"];
 
     for (const ta of tabs) {
-        const tabName = document.getElementById("btn-" + ta)
-        if (ta == tab) {
+        const tabBtn = document.getElementById("btn-" + ta)
+        if(tabBtn) {
+            if (ta == tab) {
             
-            tabName.classList.remove( ... inactive);
-            tabName.classList.add( ... active);
+            tabBtn.classList.remove( ... inactive);
+            tabBtn.classList.add( ... active);
             
         } else{
-            tabName.classList.add( ... inactive);
-            tabName.classList.remove( ... active);
+            tabBtn.classList.add( ... inactive);
+            tabBtn.classList.remove( ... active);
             
             
         }
+        }
+
         
     }
     
     if(tab === "all") {
+        filteredData = allData;
         // allContainer.classList.remove("hidden");
     }else if(tab === "open") {
-        openContainer.classList.remove("hidden")
-    }else{
-        closedContainer.classList.remove("hidden")
+        // openContainer.classList.remove("hidden")
+        filteredData = allData.filter(item => item.status === "open")
+    }else {
+        filteredData = allData.filter(item => item.status === "closed" || item.status === "close");
     }
-
+        
+    display(filteredData);
 }
 
-switchTab(currentTab);
+// switchTab(currentTab);
+async function loadCard () {
+    showLoading();
+    // loadingSpinner.classList.remove("hidden")
+    // loadingSpinner.classList.add("flex")
+try {
+    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+const data = await res.json();
+allData = data.data;
+hideLoading();
+switchTab("all")
+// loadingSpinner.classList.add("hidden");
+// loadingSpinner.classList.remove("flex");
+// // console.log(data);
+// allData(data.data)
+// display(data.data)
+// display(allData)
+} catch (error) {
+    console.error("loading problem", error);
+    hideLoading();
+}
+// WebGL2RenderingContext("all")
 
+}
 
 
 
@@ -53,9 +83,10 @@ switchTab(currentTab);
 function showLoading() {
 loadingSpinner.classList.remove("hidden")
 loadingSpinner.classList.add("flex");
-if (allContainer) {
-        allContainer.innerHTML = ""; 
-    }
+
+    allCardContainer.innerHTML = ""; 
+    headerContainer.innerHTML = "";
+
 }
 
 function hideLoading() {
@@ -64,34 +95,24 @@ loadingSpinner.classList.remove("flex");
 }
 
 // api theke data niye ase display te dekhano 
-async function loadCard () {
-    showLoading();
-    // loadingSpinner.classList.remove("hidden")
-    // loadingSpinner.classList.add("flex")
-const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-const data = await res.json();
-hideLoading();
-// loadingSpinner.classList.add("hidden");
-// loadingSpinner.classList.remove("flex");
-// // console.log(data);
-display(data.data)
-// WebGL2RenderingContext("all")
 
-}
 
 // const render = (filter) => 
 
 const display = (cards) => {
+
+    allCardContainer.innerHTML = ""; 
+    headerContainer.innerHTML = "";
 // console.log(cards);
 // const allCard = document.getElementById("all-card-container")
-allCard.innerHTML = "";
+// allCard.innerHTML = "";
 
 // const openCount = cards.filter(card => card.status === "open")
 // const closeCount = cards.filter(card => card.status === "close")
 
 // ata diye display heading ta daynamic vabe show kora hyche 
 
-const headerContainer = document.getElementById("header-container")
+// const headerContainer = document.getElementById("header-container")
 const newHeader = document.createElement("div")
 newHeader.className = "flex justify-between items-center w-full";
 newHeader.innerHTML = `
@@ -143,7 +164,7 @@ cards.forEach(card => {
         </div>
     `;
     
-    allCard.appendChild(newBtn);
+    allCardContainer.appendChild(newBtn);
 });
 
 }
