@@ -145,27 +145,44 @@ headerContainer.appendChild(newHeader);
 
     // ata diye main card gula k display te show korano hoyche 
 cards.forEach(card => {
-    // console.log(card);
+
+    const statusIcon = card.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed-Status .png";
+
+    
+    let priorityClass = "";
+    if (card.priority.toLowerCase() === "high") {
+        priorityClass = "bg-[#FEECEC] text-[#EF4444]"; 
+    } else if (card.priority.toLowerCase() === "medium") {
+        priorityClass = "bg-[#FFF6D1] text-[#F59E0B]";
+    } else {
+        priorityClass = "bg-[#EEEFF2] text-[#9CA3AF]"; 
+    }
+    
+    // card er border gula color korar jonno ay code
+    const borderColor = card.status === "open" ? "border-[#22C55E]" : "border-[#8B5CF6]";
+
+
     const newBtn = document.createElement("div")
+    newBtn.className = "h-full";
     newBtn.innerHTML = `
-    <div onclick="handleModalOpen(${card.id})" class="p-4 space-y-3 shadow-lg h-full border-2 border-slate-100 rounded-md">
-            <div class="flex justify-between ">
-                <img src="./assets/Open-Status.png" alt="">
-                <h2 class="bg-[#FEECEC] text-[#EF4444] w-20 rounded-xl flex justify-center items-center  text-[12px] font-medium">${card.priority}</h2>
+        <div onclick="handleModalOpen(${card.id})" class="p-4 flex flex-col shadow-lg h-full rounded-md border-t-4 ${borderColor} cursor-pointer hover:bg-slate-50 transition">
+            
+            <div class="flex justify-between items-center mb-3">
+                <img src="${statusIcon}" alt="${card.status}" class="w-6 h-6">
+                <h2 class="${priorityClass} px-3 py-1 rounded-xl text-[10px] font-bold uppercase">
+                    ${card.priority}
+                </h2>
             </div>
-                <h2 class="font-semibold text-md">${card.title}</h2>
-                <p class="line-clamp-2 text-[12px] text-[#64748B]">${card.description}</p>
-
-            <div class="flex gap-2">
-                ${card.labels?.[0] ? ` <h2 class="bg-[#FEECEC] text-[#EF4444]  py-2 px-4 rounded-full flex justify-center items-center  text-[12px] font-medium">${card.labels[0]}</h2>` : ''}
-                ${card.labels?.[1] ? `<p class="bg-[#FFF8D6] text-[#D97706] px-2 rounded-full flex justify-center items-center text-[12px] font-medium">${card.labels[1]}</p>` : ''}
-            </div>
-
-            <hr>
-
-            <div>
-            <p class="text-[#64748B] text-[12px]">${card.author}</p>
-            <p class="text-[#64748B] text-[12px]">${new Date(card.createdAt).toLocaleDateString()}</p>
+        
+            <h2 class="font-semibold text-md mb-2 line-clamp-1">${card.title}</h2>
+            <p class="line-clamp-2 text-[12px] text-[#64748B] mb-4">${card.description}</p>
+        
+            <div class="mt-auto">
+                <hr class="border-t border-gray-200 mb-3">
+                <div class="flex justify-between items-center">
+                    <p class="text-[#64748B] text-[12px] font-semibold">${card.author}</p>
+                    <p class="text-[#64748B] text-[12px]">${new Date(card.createdAt).toLocaleDateString()}</p>
+                </div>
             </div>
         </div>
     `;
@@ -192,7 +209,7 @@ function openModal(post) {
 
     const modalBtn = document.createElement("div");
     modalBtn.innerHTML = `
-    <div class="modal-box space-y-4 md:w-[800px] p-7">
+    <div class="modal-box space-y-4 w-10/12 md:w-12/12 p-7">
 
                 <div class="" >
                     <h2 class="text-[#1F2937] text-[24px] font-bold">${post.title}</h2>
