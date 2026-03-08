@@ -67,7 +67,7 @@ const data = await res.json();
 allData = data.data;
 hideLoading();
 switchTab("all")
-openModal(data.data)
+// openModal(data.data)
 // search(data.data)
 // loadingSpinner.classList.add("hidden");
 // loadingSpinner.classList.remove("flex");
@@ -120,7 +120,7 @@ const display = (cards) => {
 
 // const headerContainer = document.getElementById("header-container")
 const newHeader = document.createElement("div")
-newHeader.className = "flex justify-between items-center w-full";
+newHeader.className = "flex justify-between items-center w-full ";
 newHeader.innerHTML = `
                 <div class="flex gap-3">
                     <img class="bg-[#ECE4FF] p-1 rounded-full w-10 h-10" src="./assets/Aperture.png" alt="">
@@ -131,11 +131,11 @@ newHeader.innerHTML = `
                 </div>
             <div class="md:flex gap-3">
                 <div class="flex items-center gap-1">
-                        <img class="w-3 h-3 " src="./assets/Ellipse 2 (1).png" alt="">
+                        <img class="w-3 h-3 " src="./assets/Ellipse 2.png" alt="">
                     <p class="font-medium text-[16px] tet-[#1F2937]">open</p>
                 </div>
                 <div class="flex items-center gap-1">
-                    <img class="w-3 h-3 " src="./assets/Ellipse 2.png" alt="">
+                <img class="w-3 h-3 " src="./assets/Ellipse 2 (1).png" alt="">
                     <p class="font-medium text-[16px] tet-[#1F2937]">closed</p>
                 </div>
             </div>
@@ -148,7 +148,7 @@ cards.forEach(card => {
     // console.log(card);
     const newBtn = document.createElement("div")
     newBtn.innerHTML = `
-    <div onclick="handleModalOpen(${card.id})" class="p-4 space-y-3 shadow-lg h-full">
+    <div onclick="handleModalOpen(${card.id})" class="p-4 space-y-3 shadow-lg h-full border-2 border-slate-100 rounded-md">
             <div class="flex justify-between ">
                 <img src="./assets/Open-Status.png" alt="">
                 <h2 class="bg-[#FEECEC] text-[#EF4444] w-20 rounded-xl flex justify-center items-center  text-[12px] font-medium">${card.priority}</h2>
@@ -192,12 +192,12 @@ function openModal(post) {
 
     const modalBtn = document.createElement("div");
     modalBtn.innerHTML = `
-    <div class="modal-box space-y-4 md:w-[600px]">
+    <div class="modal-box space-y-4 md:w-[800px] p-7">
 
                 <div class="" >
                     <h2 class="text-[#1F2937] text-[24px] font-bold">${post.title}</h2>
                     <div class="flex items-center space-x-3">
-                        <button class="bg-[#00A96E] px-3 py-2 rounded-full">${post.status}</button>
+                        <button class="bg-[#00A96E] px-2 py-1 rounded-full text-white">${post.status}</button>
                         <p class="text-[#64748B] text-[12px] ">${post.author}</p>
                         <p class="text-[#64748B] text-[12px] ">${new Date(post.createdAt).toLocaleDateString()}</p>
                     </div>
@@ -205,7 +205,7 @@ function openModal(post) {
 
                 <div class="flex gap-2">
             ${post.labels?.map(label => `
-                <span class="bg-[#FEECEC] text-[#EF4444] py-1 px-4 rounded-full text-[12px] font-medium border border-[#FEECEC]">
+                <span class="bg-[#FEECEC] text-[#EF4444] py-1 px-2 rounded-full text-[12px] font-medium border border-[#FEECEC]">
                     ${label}
                 </span>
             `).join('') || ''}
@@ -215,15 +215,15 @@ function openModal(post) {
                     <p class="text-[#64748B] text-[16px] ">${post.description}</p>
                 </div>
 
-                <div class="grid grid-cols-2 bg-slate-100 p-4">
-                    <div>
+                <div class=" bg-slate-100 p-3 flex justify-center items-center shadow-sm rounded-sm">
+                    <div class="flex-1">
                         <h3 class="text-[#64748B] text-[16px] ">Assignee:</h3>
                         <h3 class="text-[#1F2937] text-[16px] font-semibold">${post.assignee}</h3>
                     </div>
 
-                    <div class="">
+                    <div class="flex-1">
                         <h3 class="text-[#64748B] text-[16px]  rounded-full  font-medium ">Priority:</h3>
-                        <button class="btn bg-[#EF4444] rounded-full py-2 px-4 text-white">${post.priority}</button>
+                        <button class="py-1 px-2 bg-[#EF4444] rounded-full text-white">${post.priority}</button>
                     </div>
                 </div>
 
