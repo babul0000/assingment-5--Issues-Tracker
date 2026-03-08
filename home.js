@@ -68,6 +68,7 @@ allData = data.data;
 hideLoading();
 switchTab("all")
 openModal(data.data)
+// search(data.data)
 // loadingSpinner.classList.add("hidden");
 // loadingSpinner.classList.remove("flex");
 // // console.log(data);
@@ -144,7 +145,7 @@ headerContainer.appendChild(newHeader);
 
     // ata diye main card gula k display te show korano hoyche 
 cards.forEach(card => {
-    console.log(card);
+    // console.log(card);
     const newBtn = document.createElement("div")
     newBtn.innerHTML = `
     <div onclick="handleModalOpen(${card.id})" class="p-4 space-y-3 shadow-lg h-full">
@@ -174,13 +175,15 @@ cards.forEach(card => {
 
 }
 
+// modal section ta daynamic vabe dekhanor jonno ay function ta kora hyche
+//  r atar funcon name ta display er vitore thaka all card er btn a onclick hisabe add kora hyche
 function handleModalOpen(id) {
     const post = allData.find(item => item.id == id);
     if(post) {
         openModal(post); 
     }
 }
-
+// ata diye daynamic vabe modal ta display kora hyche 
 function openModal(post) {
 
 
@@ -241,5 +244,15 @@ function openModal(post) {
 
 loadCard();
 
+// ata diye search er kaj kora hoyche
+document.getElementById("search-btn").addEventListener("click", () => {
+    const input = document.getElementById("input-btn");
+    const searchValue = input.value.trim().toLowerCase();
 
+    
+    const searchResult = allData.filter(item => 
+        item.title.toLowerCase().includes(searchValue)
+    );
 
+    display(searchResult);
+});
