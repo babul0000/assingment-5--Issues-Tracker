@@ -147,7 +147,7 @@ cards.forEach(card => {
     console.log(card);
     const newBtn = document.createElement("div")
     newBtn.innerHTML = `
-    <div onclick="openModal(${card.id})" class="p-4 space-y-3 shadow-lg h-full">
+    <div onclick="handleModalOpen(${card.id})" class="p-4 space-y-3 shadow-lg h-full">
             <div class="flex justify-between ">
                 <img src="./assets/Open-Status.png" alt="">
                 <h2 class="bg-[#FEECEC] text-[#EF4444] w-20 rounded-xl flex justify-center items-center  text-[12px] font-medium">${card.priority}</h2>
@@ -156,8 +156,8 @@ cards.forEach(card => {
                 <p class="line-clamp-2 text-[12px] text-[#64748B]">${card.description}</p>
 
             <div class="flex gap-2">
-                ${card.labels[0] ? ` <h2 class="bg-[#FEECEC] text-[#EF4444]  py-2 px-4 rounded-full flex justify-center items-center  text-[12px] font-medium">${card.labels[0]}</h2>` : ''}
-                ${card.labels[1] ? `<p class="bg-[#FFF8D6] text-[#D97706] px-2 rounded-full flex justify-center items-center text-[12px] font-medium">${card.labels[1]}</p>` : ''}
+                ${card.labels?.[0] ? ` <h2 class="bg-[#FEECEC] text-[#EF4444]  py-2 px-4 rounded-full flex justify-center items-center  text-[12px] font-medium">${card.labels[0]}</h2>` : ''}
+                ${card.labels?.[1] ? `<p class="bg-[#FFF8D6] text-[#D97706] px-2 rounded-full flex justify-center items-center text-[12px] font-medium">${card.labels[1]}</p>` : ''}
             </div>
 
             <hr>
@@ -174,6 +174,13 @@ cards.forEach(card => {
 
 }
 
+function handleModalOpen(id) {
+    const post = allData.find(item => item.id == id);
+    if(post) {
+        openModal(post); 
+    }
+}
+
 function openModal(post) {
 
 
@@ -182,35 +189,38 @@ function openModal(post) {
 
     const modalBtn = document.createElement("div");
     modalBtn.innerHTML = `
-    <div class="modal-box space-y-4">
+    <div class="modal-box space-y-4 md:w-[600px]">
 
                 <div class="" >
                     <h2 class="text-[#1F2937] text-[24px] font-bold">${post.title}</h2>
                     <div class="flex items-center space-x-3">
-                        <button class="bg-[#00A96E] px-3 py-2 rounded-full">Opened</button>
-                        <p class="text-[#64748B] text-[12px] ">Opened by Fahim Ahmed</p>
-                        <p class="text-[#64748B] text-[12px] ">22/02/2026</p>
+                        <button class="bg-[#00A96E] px-3 py-2 rounded-full">${post.status}</button>
+                        <p class="text-[#64748B] text-[12px] ">${post.author}</p>
+                        <p class="text-[#64748B] text-[12px] ">${new Date(post.createdAt).toLocaleDateString()}</p>
                     </div>
                 </div>
 
-                <div class="flex gap-4">
-                    <button class="bg-[#FEECEC] text-[#EF4444]  py-2 px-3 rounded-full flex justify-center items-center  text-[12px] font-medium">Bug</button>
-                    <button class="bg-[#FFF8D6] text-[#D97706] px-2 rounded-full flex justify-center items-center text-[12px] font-medium">help wanted</button>
-                </div>
+                <div class="flex gap-2">
+            ${post.labels?.map(label => `
+                <span class="bg-[#FEECEC] text-[#EF4444] py-1 px-4 rounded-full text-[12px] font-medium border border-[#FEECEC]">
+                    ${label}
+                </span>
+            `).join('') || ''}
+        </div>
                 
                 <div> 
-                    <p class="text-[#64748B] text-[16px] ">The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.</p>
+                    <p class="text-[#64748B] text-[16px] ">${post.description}</p>
                 </div>
 
                 <div class="grid grid-cols-2 bg-slate-100 p-4">
                     <div>
                         <h3 class="text-[#64748B] text-[16px] ">Assignee:</h3>
-                        <h3 class="text-[#1F2937] text-[16px] font-semibold">Fahim Ahmed</h3>
+                        <h3 class="text-[#1F2937] text-[16px] font-semibold">${post.assignee}</h3>
                     </div>
 
                     <div class="">
                         <h3 class="text-[#64748B] text-[16px]  rounded-full  font-medium ">Priority:</h3>
-                        <button class="btn bg-[#EF4444] rounded-full py-2 px-4 text-white">High</button>
+                        <button class="btn bg-[#EF4444] rounded-full py-2 px-4 text-white">${post.priority}</button>
                     </div>
                 </div>
 
@@ -219,7 +229,6 @@ function openModal(post) {
 
             <div class="modal-action">
                 <form method="dialog">
-                <!-- if there is a button in form, it will close the modal -->
                 <button class="btn btn-primary">Close</button>
                 </form>
             </div>
