@@ -9,7 +9,7 @@ const loginBtn = document.getElementById('login-btn').addEventListener("click", 
     console.log(inputPassword.value);
     
     if(inputUsername.value == "admin" && inputPassword.value == "admin123") {
-        alert("login successfully")
+        // alert("login successfully")
         console.log("succes");
         
         window.location.assign("home.html");
