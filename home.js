@@ -110,15 +110,7 @@ const display = (cards) => {
     allCardContainer.innerHTML = ""; 
     headerContainer.innerHTML = "";
 // console.log(cards);
-// const allCard = document.getElementById("all-card-container")
-// allCard.innerHTML = "";
 
-// const openCount = cards.filter(card => card.status === "open")
-// const closeCount = cards.filter(card => card.status === "close")
-
-// ata diye display heading ta daynamic vabe show kora hyche 
-
-// const headerContainer = document.getElementById("header-container")
 const newHeader = document.createElement("div")
 newHeader.className = "flex justify-between items-center w-full ";
 newHeader.innerHTML = `
@@ -209,7 +201,7 @@ function openModal(post) {
 
     const modalBtn = document.createElement("div");
     modalBtn.innerHTML = `
-    <div class="modal-box space-y-4 w-10/12 md:w-12/12 p-7">
+    <div class="modal-box space-y-4 w-10/12 md:w-12/12 p-7 mx-auto">
 
                 <div class="" >
                     <h2 class="text-[#1F2937] text-[24px] font-bold">${post.title}</h2>
